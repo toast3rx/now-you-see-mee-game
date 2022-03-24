@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include "deck.h"
 #include "../DoublyLinkedListImpl/DoublyLinkedList.h"
+#include "../Exceptions/exceptions.h"
 
 playing_set *create_playing_set()
 {
 	playing_set *set = dll_create(sizeof(deck));
-	printf("Playing set created!\n");
 	return set;
 }
 
@@ -31,7 +31,12 @@ void show_deck(deck *curr_deck)
 }
 void show_deck_at_index(playing_set *set, int index)
 {
-	
+
+	if (is_deck_out_of_bounds(set, index)) {
+		deck_index_out_of_bounds_exception();
+		return;
+	}
+
 	printf("Deck %d\n", index);
 	deck *curr_deck = (deck *)(dll_get_nth_node(set, index)->data);
 
@@ -53,6 +58,12 @@ void show_all(playing_set *set)
 }
 
 deck *remove_deck_at(playing_set *set, int index) {
+
+	if (is_deck_out_of_bounds(set, index)) {
+		deck_index_out_of_bounds_exception();
+		return NULL;
+	}
+
 	if (!set->head) {
 		printf("Empty List!\n");
 		return NULL;
@@ -63,7 +74,18 @@ deck *remove_deck_at(playing_set *set, int index) {
 }
 
 dll_node_t *delete_card(playing_set *set, int deck_index, int card_index) {
+
+	if (is_deck_out_of_bounds(set, deck_index)) {
+		deck_index_out_of_bounds_exception();
+		return NULL;
+	}
+
 	deck* deck_at = (deck*)(dll_get_nth_node(set, deck_index)->data);
+
+	if (is_card_out_of_bounds(deck_at, card_index)) {
+		card_index_out_of_bounds_exception(card_index);
+		return NULL;
+	}
 
 	dll_node_t *deleted_node = dll_remove_nth_node(deck_at, card_index);
 	printf("The card was successfully deleted from deck %d.\n", deck_index);
@@ -100,6 +122,12 @@ void free_set(playing_set **set) {
 }
 
 void add_cards(playing_set *set, int deck_index, int cards_count) {
+
+	if (is_deck_out_of_bounds(set, deck_index)) {
+		deck_index_out_of_bounds_exception();
+		return;
+	}
+
 	deck* deck_at = (deck *)(dll_get_nth_node(set, deck_index)->data);
 	for (int i = 0; i < cards_count; i++) {
 		playing_card *new_card = malloc(sizeof(*new_card));
@@ -115,11 +143,20 @@ int get_decks_number(playing_set *set) {
 	return set->size;
 }
 int get_deck_len(playing_set *set, int index) {
+	if (is_deck_out_of_bounds(set, index)) {
+		return -1;
+	}
 	deck *curr_deck = (deck *)(dll_get_nth_node(set, index)->data);
 	return curr_deck->size;
 }
 
 void merge_decks(playing_set *set, int index1, int index2) {
+
+	if (is_deck_out_of_bounds(set, index1) || is_deck_out_of_bounds(set, index2)) {
+		deck_index_out_of_bounds_exception();
+		return;
+	}
+	
 	deck *first_deck = (deck *)(dll_get_nth_node(set, index1)->data);
 	deck *second_deck = (deck *)(dll_get_nth_node(set, index2)->data);
 
@@ -156,6 +193,10 @@ void merge_decks(playing_set *set, int index1, int index2) {
 }
 
 void shuffle_deck(playing_set *set, int index) {
+	if(is_deck_out_of_bounds(set, index)) {
+		deck_index_out_of_bounds_exception();
+		return;
+	}
 	deck *shuffled_deck = (deck *)(dll_get_nth_node(set, index)->data);
 
 	dll_node_t *middle_node = dll_get_nth_node(shuffled_deck, shuffled_deck->size / 2 - 1);
@@ -174,7 +215,17 @@ void shuffle_deck(playing_set *set, int index) {
 
 void split_deck(playing_set *set, int index, int index_split) {
 
+	if (is_deck_out_of_bounds(set, index)) {
+		deck_index_out_of_bounds_exception();
+		return;
+	}
+
 	deck *curr_deck = (deck *)(dll_get_nth_node(set, index)->data);
+
+	if (is_card_out_of_bounds(curr_deck, index_split)) {
+		card_index_out_of_bounds_exception(index_split);
+		return;
+	}
 
 	deck *second_deck = create_deck();
 
@@ -190,6 +241,11 @@ void split_deck(playing_set *set, int index, int index_split) {
 }
 
 void reverse_deck(playing_set *set, int deck_index) {
+
+	if (is_deck_out_of_bounds(set, deck_index)) {
+		deck_index_out_of_bounds_exception();
+		return;
+	}
 	deck *curr_deck = (deck *)(dll_get_nth_node(set, deck_index)->data);
 	dll_reverse(curr_deck);
 
