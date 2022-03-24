@@ -118,3 +118,39 @@ int get_deck_len(playing_set *set, int index) {
 	deck *curr_deck = (deck *)(dll_get_nth_node(set, index)->data);
 	return curr_deck->size;
 }
+
+void merge_decks(playing_set *set, int index1, int index2) {
+	deck *first_deck = (deck *)(dll_get_nth_node(set, index1)->data);
+	deck *second_deck = (deck *)(dll_get_nth_node(set, index2)->data);
+
+	dll_node_t *curr1 = first_deck->head;
+	dll_node_t *curr2 = second_deck->head;
+
+	deck *res = create_deck();
+
+	while (curr1 != NULL && curr2 != NULL) {
+		dll_add_nth_node(res, sizeof(playing_card), (void *) curr1->data);
+		dll_add_nth_node(res, sizeof(playing_card), (void *) curr2->data);
+
+		curr1 = curr1->next;
+		curr2 = curr2->next;
+	}
+
+	while (curr1 != NULL) {
+		dll_add_nth_node(res, sizeof(playing_card), (void *)curr1->data);
+		curr1 = curr1->next;
+	}
+
+	while (curr2 != NULL) {
+		dll_add_nth_node(res, sizeof(playing_card), (void *)curr2->data);
+		curr2 = curr2->next;
+	}
+
+	deck *deleted1 = remove_deck_at(set, index1);
+	deck *deleted2 = remove_deck_at(set, index2);
+	dll_free(&deleted1);
+	dll_free(&deleted2);
+
+	add_deck(set, res);
+	printf("The deck %d and the deck %d were successfully merged.\n", index1, index2);
+}

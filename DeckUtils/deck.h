@@ -26,24 +26,17 @@ void add_deck(playing_set* set, deck *new_deck);
 
 deck* remove_deck_at(playing_set* set, int index);
 dll_node_t* delete_card(playing_set *set, int deck_index, int card_index);
-// Del card
-// Add cards
 void add_cards(playing_set *set, int deck_index, int cards_count);
-// deck number
 int get_decks_number(playing_set *set);
-// deck len
 int get_deck_len(playing_set *set, int index);
 // shuffle deck
 // merge decks
+void merge_decks(playing_set *set, int index1, int index2);
 // split deck
 // reverse deck
 void show_deck(deck *curr_deck);
 void show_deck_at_index(playing_set *set, int index);
 void show_all(playing_set *set);
-// exit
-
 void free_set(playing_set **set);
-
-
 
 #endif

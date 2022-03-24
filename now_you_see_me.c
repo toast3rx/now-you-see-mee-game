@@ -58,8 +58,11 @@ int main(void)
 			scanf("%d", &pos);
 			deck_len_command(my_playing_set, pos);
 		}
-
-
+		if (strncmp(command, "MERGE_DECKS", 11) == 0) {
+			int index1, index2;
+			scanf("%d%d", &index1, &index2);
+			merge_decks(my_playing_set, index1, index2);
+		}
 
 	}
 	return 0;
