@@ -43,4 +43,7 @@ dll_add_nth_node(doubly_linked_list_t *list, unsigned int n, const void *new_dat
 dll_node_t *
 dll_remove_nth_node(doubly_linked_list_t *list, unsigned int n);
 
+void
+dll_reverse(doubly_linked_list_t *list);
+
 #endif 

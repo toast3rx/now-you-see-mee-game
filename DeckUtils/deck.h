@@ -29,8 +29,10 @@ int get_deck_len(playing_set *set, int index);
 void shuffle_deck(playing_set *set, int index);	
 
 void merge_decks(playing_set *set, int index1, int index2);
-// split deck
+
+void split_deck(playing_set *set, int index, int index_split);
 // reverse deck
+void reverse_deck(playing_set *set, int deck_index);
 void show_deck(deck *curr_deck);
 
 void show_deck_at_index(playing_set *set, int index);

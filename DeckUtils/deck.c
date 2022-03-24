@@ -171,3 +171,27 @@ void shuffle_deck(playing_set *set, int index) {
 
 	printf("The deck %d was successfully shuffled.\n", index);
 }
+
+void split_deck(playing_set *set, int index, int index_split) {
+
+	deck *curr_deck = (deck *)(dll_get_nth_node(set, index)->data);
+
+	deck *second_deck = create_deck();
+
+	int count = curr_deck->size - index_split;
+	for (int i = 0; i < count; i++) {
+		dll_node_t *tmp = dll_remove_nth_node(curr_deck, index_split);
+		dll_add_nth_node(second_deck, second_deck->size, (void *)(tmp->data));
+	}
+
+	dll_add_nth_node(set, index + 1, (void *)second_deck);
+
+	printf("The deck %d was successfully split by index %d.\n", index, index_split);
+}
+
+void reverse_deck(playing_set *set, int deck_index) {
+	deck *curr_deck = (deck *)(dll_get_nth_node(set, deck_index)->data);
+	dll_reverse(curr_deck);
+
+	printf("The deck %d was successfully reversed.\n", deck_index);
+}

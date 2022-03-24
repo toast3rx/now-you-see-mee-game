@@ -67,6 +67,16 @@ int main(void)
 			scanf("%d", &pos);
 			shuffle_deck(my_playing_set, pos);
 		}
+		if (strncmp(command, "SPLIT_DECK", 10) == 0) {
+			scanf("%d", &pos);
+			int index_split;
+			scanf("%d", &index_split);
+			split_deck(my_playing_set, pos, index_split);
+		}
+		if (strncmp(command, "REVERSE_DECK", 12) == 0) {
+			scanf("%d", &pos);
+			reverse_deck(my_playing_set, pos);
+		}
 
 	}
 	return 0;

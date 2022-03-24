@@ -183,6 +183,22 @@ dll_print_string_list(doubly_linked_list_t *list)
 
 }
 
+void
+dll_reverse(doubly_linked_list_t *list)
+{
+	dll_node_t *curr = list->head;
+	dll_node_t *prev = curr->prev;
+	for (int i = 0; i < (int)list->size; i++) {
+		dll_node_t *tmp = curr->next;
+		curr->prev = curr->next;
+		curr->next = prev;
+
+		prev = curr;
+		curr = tmp;
+	}
+
+	list->head = prev;
+}
 
 // int main()
 // {
