@@ -154,3 +154,20 @@ void merge_decks(playing_set *set, int index1, int index2) {
 	add_deck(set, res);
 	printf("The deck %d and the deck %d were successfully merged.\n", index1, index2);
 }
+
+void shuffle_deck(playing_set *set, int index) {
+	deck *shuffled_deck = (deck *)(dll_get_nth_node(set, index)->data);
+
+	dll_node_t *middle_node = dll_get_nth_node(shuffled_deck, shuffled_deck->size / 2 - 1);
+
+	dll_node_t *last_node = dll_get_nth_node(shuffled_deck, shuffled_deck->size - 1);
+
+	middle_node->next->prev = NULL;
+
+	last_node->next = shuffled_deck->head;
+	shuffled_deck->head->prev = last_node;
+
+	shuffled_deck->head = middle_node->next;
+
+	printf("The deck %d was successfully shuffled.\n", index);
+}

@@ -63,6 +63,10 @@ int main(void)
 			scanf("%d%d", &index1, &index2);
 			merge_decks(my_playing_set, index1, index2);
 		}
+		if (strncmp(command, "SHUFFLE_DECK", 12) == 0) {
+			scanf("%d", &pos);
+			shuffle_deck(my_playing_set, pos);
+		}
 
 	}
 	return 0;
