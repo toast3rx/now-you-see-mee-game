@@ -27,6 +27,7 @@ void add_deck_command(playing_set *set) {
 	}
 		add_deck(set, deck);
 		printf("The deck was successfully created with %d cards.\n", deck->size);
+	free(deck);
 }
 
 void deck_number_command(playing_set* set) {
