@@ -1,5 +1,5 @@
 build:
-	gcc -ggdb3 -Wall -Wextra  DeckUtils/deck.c DoublyLinkedListImpl/DoublyLinkedList.c IO_Utils/IO_commands.c Exceptions/exceptions.c now_you_see_me.c -o a.out
+	gcc -ggdb3 -Wall -Wextra  DeckUtils/deck.c DoublyLinkedListImpl/DoublyLinkedList.c IO_Utils/IO_commands.c Exceptions/exceptions.c now_you_see_me.c -o tema1
 
 #pack:
 #	zip -r  311CA_LateaMihaiAlexandru_Tema3.zip \

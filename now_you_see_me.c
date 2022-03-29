@@ -27,15 +27,20 @@ int main(void)
 			show_all(my_playing_set);
 		} else	if (strncmp(command, "DEL_DECK", 8) == 0) {
 			scanf("%d", &pos);
-
-			deck *deleted = (deck *)remove_deck_at(my_playing_set, pos);
-			dll_free(&deleted);
+			dll_node_t *deleted = remove_deck_at(my_playing_set, pos);
+			if (deleted) {
+				dll_free((deck **)(&deleted->data));
+				free(deleted);
+				printf("The deck %d was successfully deleted.\n", pos);
+			}
 		} else if (strncmp(command, "DEL_CARD", 8) == 0) {
 			int card_pos, deck_pos;
 			scanf("%d%d", &deck_pos, &card_pos);
 			dll_node_t *deleted = delete_card(my_playing_set, deck_pos, card_pos);
-			free(deleted->data);
-			free(deleted);
+			if (deleted) {
+				free(deleted->data);
+				free(deleted);
+			}
 		} else if (strncmp(command, "ADD_CARDS", 9) == 0) {
 			scanf("%d", &pos);
 			int cards_count;
@@ -67,7 +72,6 @@ int main(void)
 			scanf("%d", &pos);
 			reverse_deck(my_playing_set, pos);
 		} else {
-			printf("XXXXXX%sXXXXXX\n", command);
 			invalid_command_exception();
 		}
 

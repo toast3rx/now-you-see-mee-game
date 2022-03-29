@@ -101,7 +101,7 @@ dll_remove_nth_node(doubly_linked_list_t *list, unsigned int n)
 
 	if (list->size == 1) {
 		deleted_node = list->head;
-		list->head->next = NULL;
+		list->head = NULL;
 	} else if (n == 0) {
 		deleted_node = list->head;
 		list->head->next->prev = NULL;

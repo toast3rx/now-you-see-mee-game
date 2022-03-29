@@ -16,7 +16,7 @@ deck* create_deck();
 
 void add_deck(playing_set* set, deck *new_deck);
 
-deck* remove_deck_at(playing_set* set, int index);
+dll_node_t* remove_deck_at(playing_set* set, int index);
 
 dll_node_t* delete_card(playing_set *set, int deck_index, int card_index);
 

@@ -25,7 +25,7 @@ void show_deck(deck *curr_deck)
 	dll_node_t *curr_node_card = curr_deck->head;
 	for (int i = 0; i < (int)curr_deck->size; i++) {
 		playing_card *card = (playing_card *)(curr_node_card->data);
-		printf("\t %d %s\n", card->value, card->symbol);
+		printf("\t%d %s\n", card->value, card->symbol);
 		curr_node_card = curr_node_card->next;
 	}
 }
@@ -48,16 +48,15 @@ void show_all(playing_set *set)
 
 	dll_node_t *curr = set->head;
 	for (int i = 0; i < (int)set->size; i++) {
-		printf("Deck %d\n", i);
+		printf("Deck %d:\n", i);
 		deck *curr_deck = (deck *)(curr->data);
 
 		show_deck(curr_deck);
 		curr = curr->next;
-		printf("...\n");
 	}
 }
 
-deck *remove_deck_at(playing_set *set, int index) {
+dll_node_t *remove_deck_at(playing_set *set, int index) {
 
 	if (is_deck_out_of_bounds(set, index)) {
 		deck_index_out_of_bounds_exception();
@@ -68,9 +67,8 @@ deck *remove_deck_at(playing_set *set, int index) {
 		printf("Empty List!\n");
 		return NULL;
 	}
-	deck *deleted_deck = (deck *)(dll_remove_nth_node(set, index)->data);
-	printf("The deck %d was successfully deleted.\n", index);
-	return deleted_deck;
+	
+	return dll_remove_nth_node(set, index);
 }
 
 dll_node_t *delete_card(playing_set *set, int deck_index, int card_index) {
@@ -88,20 +86,18 @@ dll_node_t *delete_card(playing_set *set, int deck_index, int card_index) {
 	}
 
 	dll_node_t *deleted_node = dll_remove_nth_node(deck_at, card_index);
+
+	if(deck_at->size == 0) {
+		dll_node_t *deleted_deck = remove_deck_at(set, deck_index);
+		dll_free((deck **)(&deleted_deck->data));
+		free(deleted_deck);
+	}
+
 	printf("The card was successfully deleted from deck %d.\n", deck_index);
 	return deleted_node;
 }
 
 void free_set(playing_set **set) {
-	// dll_node_t *curr = (*set)->head;
-	// for (int i = 0; i < (int)(*set)->size; i++) {
-	// 	dll_node_t *tmp = curr;
-	// 	deck *curr_deck = (deck *)(curr->data);
-	// 	curr = curr->next;
-	// 	dll_free(&curr_deck);
-	// 	free(tmp);
-	// } 
-
 	dll_node_t *curr;
 	while ((*set)->head != NULL) {
 		curr = (*set)->head;
@@ -111,13 +107,6 @@ void free_set(playing_set **set) {
 		free(curr);
 
 	}
-	// dll_node_t *curr1;
-	// while ((*set)->head != NULL) {
-	// 	curr1 = (*set)->head;
-	// 	(*set)->head = (*set)->head->next;
-	// 	//free(curr1->data);
-	// 	free(curr1);
-	// }
 	free(*set);
 }
 
@@ -183,12 +172,17 @@ void merge_decks(playing_set *set, int index1, int index2) {
 		curr2 = curr2->next;
 	}
 
-	deck *deleted1 = remove_deck_at(set, index1);
-	deck *deleted2 = remove_deck_at(set, index2);
-	dll_free(&deleted1);
-	dll_free(&deleted2);
+	
+	dll_node_t *deleted1 = remove_deck_at(set, index1);
+	dll_node_t *deleted2 = remove_deck_at(set, index2- 1);
+	dll_free((deck **)(&deleted1->data));
+	free(deleted1);
+	dll_free((deck **)(&deleted2->data));
+	free(deleted2);
 
 	add_deck(set, res);
+	free(res);
+
 	printf("The deck %d and the deck %d were successfully merged.\n", index1, index2);
 }
 
