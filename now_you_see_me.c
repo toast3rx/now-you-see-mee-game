@@ -6,7 +6,7 @@
 #include "IO_Utils/IO_commands.h"
 #include "Exceptions/exceptions.h"
 
-#define MAX_STRING_SIZE 64
+#define MAX_STRING_SIZE 100
 
 int main(void)
 {
@@ -14,10 +14,11 @@ int main(void)
 	playing_set *my_playing_set = create_playing_set();
 
 	while (1) {
-		char command[16];
+		char command[MAX_STRING_SIZE];
 		int pos;
 
 		scanf("%s", command);
+
 		if (strncmp(command, "ADD_DECK", 8) == 0) {
 			add_deck_command(my_playing_set);
 		} else if (strncmp(command, "SHOW_DECK", 9) == 0) {
@@ -40,12 +41,15 @@ int main(void)
 			if (deleted) {
 				free(deleted->data);
 				free(deleted);
+				printf("The card was successfully deleted from deck %d.\n", deck_pos);
 			}
 		} else if (strncmp(command, "ADD_CARDS", 9) == 0) {
 			scanf("%d", &pos);
 			int cards_count;
 			scanf("%d", &cards_count);
-			add_cards(my_playing_set, pos, cards_count);
+			if(add_cards(my_playing_set, pos, cards_count)) {
+				printf("The cards were successfully added to deck %d.\n", pos);
+			}
 		} else if (strncmp(command, "EXIT", 4) == 0) {
 			free_set(&my_playing_set);
 			break;
@@ -59,18 +63,23 @@ int main(void)
 		} else if (strncmp(command, "MERGE_DECKS", 11) == 0) {
 			int index1, index2;
 			scanf("%d%d", &index1, &index2);
-			merge_decks(my_playing_set, index1, index2);
+			if(merge_decks(my_playing_set, index1, index2)) {
+				printf("The deck %d and the deck %d were successfully merged.\n", index1, index2);
+			}
 		} else if (strncmp(command, "SHUFFLE_DECK", 12) == 0) {
 			scanf("%d", &pos);
-			shuffle_deck(my_playing_set, pos);
+			if(shuffle_deck(my_playing_set, pos))
+				printf("The deck %d was successfully shuffled.\n", pos);
 		} else	if (strncmp(command, "SPLIT_DECK", 10) == 0) {
 			scanf("%d", &pos);
 			int index_split;
 			scanf("%d", &index_split);
-			split_deck(my_playing_set, pos, index_split);
+			if(split_deck(my_playing_set, pos, index_split))
+				printf("The deck %d was successfully split by index %d.\n", pos, index_split);
 		} else if (strncmp(command, "REVERSE_DECK", 12) == 0) {
 			scanf("%d", &pos);
-			reverse_deck(my_playing_set, pos);
+			if (reverse_deck(my_playing_set, pos))
+				printf("The deck %d was successfully reversed.\n", pos);
 		} else {
 			invalid_command_exception();
 		}
