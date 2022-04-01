@@ -126,8 +126,21 @@ int add_cards(playing_set *set, int deck_index, int cards_count)
 	deck *deck_at = (deck *)(dll_get_nth_node(set, deck_index)->data);
 	for (int i = 0; i < cards_count; i++) {
 		playing_card *new_card = malloc(sizeof(*new_card));
-		scanf("%d", &new_card->value);
-		scanf("%s", new_card->symbol);
+		// scanf("%d", &new_card->value);
+		// scanf("%s", new_card->symbol);
+
+		char str[100];
+		fgets(str, 100, stdin);
+		int n = sscanf(str, "%d %s", &new_card->value, new_card->symbol);
+
+		while (n != 2 || !is_card_valid(new_card->value, new_card->symbol)) {
+			invalid_card_exception();
+			fgets(str, 100, stdin);
+			int n = sscanf(str, "%d %s", &new_card->value, new_card->symbol);
+		}
+
+
+
 		dll_add_nth_node(deck_at, deck_at->size, (void *)new_card);
 		free(new_card);
 	}

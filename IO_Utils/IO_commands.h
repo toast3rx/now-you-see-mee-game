@@ -2,7 +2,7 @@
 #define _IO_commands_h_
 #include "../DoublyLinkedListImpl/DoublyLinkedList.h"
 
-void add_deck_command(playing_set *set);
+void add_deck_command(playing_set *set, int cards_number);
 
 void deck_number_command(playing_set *set);
 

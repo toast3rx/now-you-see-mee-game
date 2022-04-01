@@ -3,6 +3,8 @@
 #define DIAMOND_SYMBOl "DIAMOND"
 #define CLUB_SYMBOl "CLUB"
 
+#define MAX_WORD 100
+
 #define CARD_MAX_VALUE 14
 #define CARD_MIN_VALUE 1
 

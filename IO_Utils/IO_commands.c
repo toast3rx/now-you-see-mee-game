@@ -3,22 +3,25 @@
 #include "../DeckUtils/deck.h"
 #include "../Exceptions/exceptions.h"
 
-void add_deck_command(playing_set *set) {
+void add_deck_command(playing_set *set, int cards_number) {
 
 	deck *deck = create_deck();
-	int card_number;
-	scanf("%d", &card_number);
-	for (int i = 0; i < card_number; i++) {
+	for (int i = 0; i < cards_number; i++) {
 
 		playing_card *new_card = malloc(sizeof(*new_card));
 
-		scanf("%d", &new_card->value);
-		scanf("%s", new_card->symbol);
+		// scanf("%d", &new_card->value);
+		// scanf("%s", new_card->symbol);
+		// getchar();
 
-		while (!is_card_valid(new_card->value, new_card->symbol)) {
+		char str[100];
+		fgets(str, 100, stdin);
+		int n = sscanf(str, "%d %s", &new_card->value, new_card->symbol);
+
+		while (n != 2 || !is_card_valid(new_card->value, new_card->symbol) ) {
 			invalid_card_exception();
-			scanf("%d", &new_card->value);
-			scanf("%s", new_card->symbol);
+			fgets(str, 100, stdin);
+			int n = sscanf(str, "%d %s", &new_card->value, new_card->symbol);
 		}
 
 		dll_add_nth_node(deck, deck->size, (void *) new_card);
