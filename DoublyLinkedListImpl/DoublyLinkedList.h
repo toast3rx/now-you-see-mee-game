@@ -100,4 +100,13 @@ dll_remove_nth_node(doubly_linked_list_t *list, unsigned int n);
 void
 dll_reverse(doubly_linked_list_t *list);
 
+/**
+ * @brief Sort list using bubble sort algorithm
+ * 
+ * @param list to be sorted
+ * @param cmp function to compare values from two nodes
+ */
+void
+dll_sort(doubly_linked_list_t *list, int (*cmp)(void *, void *));
+
 #endif 

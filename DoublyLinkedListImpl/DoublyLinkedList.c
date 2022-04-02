@@ -149,3 +149,29 @@ dll_reverse(doubly_linked_list_t *list)
 
 	list->head = prev;
 }
+
+void dll_sort(doubly_linked_list_t *list, int(*compare)(void *, void *))
+{
+	int swapped;
+	dll_node_t *ptr1;
+	dll_node_t *lptr =NULL;
+
+	if (list->head == NULL)
+		return;
+	do {
+		swapped = 0;
+		ptr1 = list->head;
+
+		while (ptr1->next != lptr) {
+			if (compare((void *)ptr1->data, (void *)ptr1->next->data) > 0) {
+				void *tmp = ptr1->data;
+				ptr1->data = ptr1->next->data;
+				ptr1->next->data = tmp;
+				swapped = 1;
+			}
+			ptr1 = ptr1->next;
+		}
+		lptr = ptr1;
+	}
+	while (swapped);
+}
