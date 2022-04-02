@@ -10,10 +10,6 @@ void add_deck_command(playing_set *set, int cards_number) {
 
 		playing_card *new_card = malloc(sizeof(*new_card));
 
-		// scanf("%d", &new_card->value);
-		// scanf("%s", new_card->symbol);
-		// getchar();
-
 		char str[100];
 		fgets(str, 100, stdin);
 		int n = sscanf(str, "%d %s", &new_card->value, new_card->symbol);

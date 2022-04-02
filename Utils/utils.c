@@ -2,6 +2,7 @@
 #include "constants.h"
 #include <string.h>
 #include <stdlib.h>
+#include "../Exceptions/exceptions.h"
 
 void split_string(char *str, char **words_array)
 {
@@ -44,13 +45,13 @@ char **read_command(char *command, int *args)
 
 	char **words = (char **)calloc(count_words, sizeof(char *));
 	if (!words) {
-		// memory_allocation_exception();
+		memory_allocation_exception();
 		return NULL;
 	}
 	for (int i = 0; i < count_words; i++) {
 		words[i] = (char *)calloc((max_length + 1), sizeof(char));
 		if (!words[i]) {
-			// memory_allocation_exception();
+			memory_allocation_exception();
 			return NULL;
 		}
 	}

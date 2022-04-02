@@ -32,7 +32,6 @@ void show_deck(deck *curr_deck)
 }
 void show_deck_at_index(playing_set *set, int index)
 {
-
 	if (is_deck_out_of_bounds(set, index)) {
 		deck_index_out_of_bounds_exception();
 		return;
@@ -46,7 +45,6 @@ void show_deck_at_index(playing_set *set, int index)
 
 void show_all(playing_set *set)
 {
-
 	dll_node_t *curr = set->head;
 	for (int i = 0; i < (int)set->size; i++) {
 		printf("Deck %d:\n", i);
@@ -59,7 +57,6 @@ void show_all(playing_set *set)
 
 dll_node_t *remove_deck_at(playing_set *set, int index)
 {
-
 	if (is_deck_out_of_bounds(set, index)) {
 		deck_index_out_of_bounds_exception();
 		return NULL;
@@ -75,7 +72,6 @@ dll_node_t *remove_deck_at(playing_set *set, int index)
 
 dll_node_t *delete_card(playing_set *set, int deck_index, int card_index)
 {
-
 	if (is_deck_out_of_bounds(set, deck_index)) {
 		deck_index_out_of_bounds_exception();
 		return NULL;
@@ -126,8 +122,6 @@ int add_cards(playing_set *set, int deck_index, int cards_count)
 	deck *deck_at = (deck *)(dll_get_nth_node(set, deck_index)->data);
 	for (int i = 0; i < cards_count; i++) {
 		playing_card *new_card = malloc(sizeof(*new_card));
-		// scanf("%d", &new_card->value);
-		// scanf("%s", new_card->symbol);
 
 		char str[100];
 		fgets(str, 100, stdin);
@@ -138,8 +132,6 @@ int add_cards(playing_set *set, int deck_index, int cards_count)
 			fgets(str, 100, stdin);
 			n = sscanf(str, "%d %s", &new_card->value, new_card->symbol);
 		}
-
-
 
 		dll_add_nth_node(deck_at, deck_at->size, (void *)new_card);
 		free(new_card);
@@ -199,8 +191,10 @@ int merge_decks(playing_set *set, int index1, int index2)
 		index1 = index2;
 		index2 = tmp;
 	}
+
 	dll_node_t *deleted1 = remove_deck_at(set, index1);
 	dll_node_t *deleted2 = remove_deck_at(set, index2 - 1);
+
 	dll_free((deck **)(&deleted1->data));
 	free(deleted1);
 	dll_free((deck **)(&deleted2->data));
@@ -210,7 +204,6 @@ int merge_decks(playing_set *set, int index1, int index2)
 	free(res);
 	return 1;
 }
-
 
 int shuffle_deck(playing_set *set, int index)
 {
@@ -222,7 +215,6 @@ int shuffle_deck(playing_set *set, int index)
 	deck *shuffled_deck = (deck *)(dll_get_nth_node(set, index)->data);
 
 	dll_node_t *middle_node = dll_get_nth_node(shuffled_deck, shuffled_deck->size / 2);
-
 	dll_node_t *last_node = dll_get_nth_node(shuffled_deck, shuffled_deck->size - 1);
 
 	last_node->next = shuffled_deck->head;
@@ -232,13 +224,12 @@ int shuffle_deck(playing_set *set, int index)
 
 	middle_node->prev->next = NULL;
 	middle_node->prev = NULL;
+
 	return 1;
 }
 
 int split_deck(playing_set *set, int index, int index_split)
 {
-
-
 	if (is_deck_out_of_bounds(set, index)) {
 		deck_index_out_of_bounds_exception();
 		return 0;
@@ -272,7 +263,6 @@ int split_deck(playing_set *set, int index, int index_split)
 
 int reverse_deck(playing_set *set, int deck_index)
 {
-
 	if (is_deck_out_of_bounds(set, deck_index)) {
 		deck_index_out_of_bounds_exception();
 		return 0;
@@ -281,3 +271,33 @@ int reverse_deck(playing_set *set, int deck_index)
 	dll_reverse(curr_deck);
 	return 1;
 }
+
+// // sort linked list by card value
+// int sort_deck(playing_set *set, int deck_index)
+// {
+// 	if (is_deck_out_of_bounds(set, deck_index)) {
+// 		deck_index_out_of_bounds_exception();
+// 		return 0;
+// 	}
+// 	deck *curr_deck = (deck *)(dll_get_nth_node(set, deck_index)->data);
+// 	dll_sort(curr_deck, compare_cards);
+// 	return 1;
+// }
+
+// void dll_sort(deck *curr_deck, int(*compare)(void *, void *))
+// {
+// 	dll_node_t *curr = curr_deck->head;
+// 	dll_node_t *next = curr->next;
+// 	while (curr != NULL) {
+// 		while (next != NULL) {
+// 			if (compare(curr->data, next->data) > 0) {
+// 				void *tmp = curr->data;
+// 				curr->data = next->data;
+// 				next->data = tmp;
+// 			}
+// 			next = next->next;
+// 		}
+// 		curr = curr->next;
+// 		next = curr->next;
+// 	}
+// }

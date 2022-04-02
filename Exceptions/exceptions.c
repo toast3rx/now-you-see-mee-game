@@ -3,7 +3,6 @@
 #include "../Utils/constants.h"
 #include <string.h>
 
-
 void deck_index_out_of_bounds_exception()
 {
 	printf("The provided index is out of bounds for the deck list.\n");
@@ -24,11 +23,17 @@ void invalid_command_exception()
 	printf("Invalid command. Please try again.\n");
 }
 
+void memory_allocation_exception()
+{
+	printf("Memory allocation failed.\n");
+}
+
 int is_deck_out_of_bounds(playing_set *set, int index) {
 	if (index >= (int)set->size || index < 0)
 		return 1;
 	return 0;
 }
+
 int is_card_out_of_bounds(deck *curr_deck, int index) {
 	if (index >= (int)curr_deck->size || index < 0)
 		return 1;
