@@ -21,7 +21,7 @@ void add_deck_command(playing_set *set, int cards_number) {
 		while (n != 2 || !is_card_valid(new_card->value, new_card->symbol) ) {
 			invalid_card_exception();
 			fgets(str, 100, stdin);
-			int n = sscanf(str, "%d %s", &new_card->value, new_card->symbol);
+			n = sscanf(str, "%d %s", &new_card->value, new_card->symbol);
 		}
 
 		dll_add_nth_node(deck, deck->size, (void *) new_card);
