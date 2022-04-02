@@ -85,11 +85,16 @@ int main(void)
 			int index_split = atoi(args[2]);
 			if (split_deck(my_playing_set, deck_pos, index_split))
 				printf("The deck %d was successfully split by index %d.\n",
-					 deck_pos, index_split);
+					deck_pos, index_split);
 		} else if (strcmp(args[0], REVERSE_CMD) == 0 && command_length == 2) {
 			int deck_pos = atoi(args[1]);
 			if (reverse_deck(my_playing_set, deck_pos))
 				printf("The deck %d was successfully reversed.\n", deck_pos);
+		} else if (strcmp(args[0], SORT_CMD) == 0 && command_length == 2) {
+			int deck_pos = atoi(args[1]);
+			if(sort_deck(my_playing_set, deck_pos)) {
+				printf("The deck %d was successfully sorted.\n", deck_pos);
+			}
 		} else {
 			invalid_command_exception();
 		}
