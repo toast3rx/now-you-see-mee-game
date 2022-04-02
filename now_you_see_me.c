@@ -73,8 +73,8 @@ int main(void)
 			int index1 = atoi(args[1]);
 			int index2 = atoi(args[2]);
 			if (merge_decks(my_playing_set, index1, index2)) {
-				printf("The deck %d and the deck %d\
-					were successfully merged.\n", index1, index2);
+				printf("The deck %d and the deck %d were successfully merged.\n",
+					index1, index2);
 			}
 		} else if (strcmp(args[0], SHUFFLE_CMD) == 0 && command_length == 2) {
 			int deck_pos = atoi(args[1]);

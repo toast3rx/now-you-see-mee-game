@@ -202,6 +202,7 @@ int merge_decks(playing_set *set, int index1, int index2)
 
 	add_deck(set, res);
 	free(res);
+	
 	return 1;
 }
 
