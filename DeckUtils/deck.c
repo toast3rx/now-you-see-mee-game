@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "deck.h"
 #include "../DoublyLinkedListImpl/DoublyLinkedList.h"
 #include "../Exceptions/exceptions.h"
+#include "../Utils/constants.h"
 
 playing_set *create_playing_set()
 {
@@ -142,7 +144,7 @@ int add_cards(playing_set *set, int deck_index, int cards_count)
 
 int get_decks_number(playing_set *set)
 {
-	return set->size;
+	return dll_get_size(set);
 }
 int get_deck_len(playing_set *set, int index)
 {
@@ -150,7 +152,7 @@ int get_deck_len(playing_set *set, int index)
 		return -1;
 	}
 	deck *curr_deck = (deck *)(dll_get_nth_node(set, index)->data);
-	return curr_deck->size;
+	return dll_get_size(curr_deck);
 }
 
 int merge_decks(playing_set *set, int index1, int index2)
@@ -202,7 +204,7 @@ int merge_decks(playing_set *set, int index1, int index2)
 
 	add_deck(set, res);
 	free(res);
-	
+
 	return 1;
 }
 
@@ -273,32 +275,47 @@ int reverse_deck(playing_set *set, int deck_index)
 	return 1;
 }
 
-// // sort linked list by card value
-// int sort_deck(playing_set *set, int deck_index)
-// {
-// 	if (is_deck_out_of_bounds(set, deck_index)) {
-// 		deck_index_out_of_bounds_exception();
-// 		return 0;
-// 	}
-// 	deck *curr_deck = (deck *)(dll_get_nth_node(set, deck_index)->data);
-// 	dll_sort(curr_deck, compare_cards);
-// 	return 1;
-// }
+int symbol_to_value(char *symbol) {
+	if (strcmp(symbol, HEART_SYMBOl) == 0) 
+		return 1;
+	if (strcmp(symbol, SPADE_SYMBOl) == 0)
+		return 2;
+	if (strcmp(symbol, DIAMOND_SYMBOl) == 0)
+		return 3;
+	if (strcmp(symbol, CLUB_SYMBOl) == 0)
+		return 4;
+	return 0;
+}
 
-// void dll_sort(deck *curr_deck, int(*compare)(void *, void *))
-// {
-// 	dll_node_t *curr = curr_deck->head;
-// 	dll_node_t *next = curr->next;
-// 	while (curr != NULL) {
-// 		while (next != NULL) {
-// 			if (compare(curr->data, next->data) > 0) {
-// 				void *tmp = curr->data;
-// 				curr->data = next->data;
-// 				next->data = tmp;
-// 			}
-// 			next = next->next;
-// 		}
-// 		curr = curr->next;
-// 		next = curr->next;
-// 	}
-// }
+int compare_cards(void *card1, void *card2)
+{
+	playing_card *c1 = (playing_card *)card1;
+	playing_card *c2 = (playing_card *)card2;
+
+	if (c1->value > c2->value) {
+		return 1;
+	} else if (c1->value < c2->value) {
+		return -1;
+	} else {
+		int card1_symbol = symbol_to_value(c1->symbol);
+		int card2_symbol = symbol_to_value(c2->symbol);
+		if (card1_symbol > card2_symbol) {
+			return 1;
+		} else if (card1_symbol < card2_symbol) {
+			return -1;
+		}
+		else return 0;
+	}
+}
+
+int sort_deck(playing_set *set, int deck_index)
+{
+	if (is_deck_out_of_bounds(set, deck_index)) {
+		deck_index_out_of_bounds_exception();
+		return 0;
+	}
+	deck *curr_deck = (deck *)(dll_get_nth_node(set, deck_index)->data);
+	dll_sort(curr_deck, compare_cards);
+	return 1;
+}
+
