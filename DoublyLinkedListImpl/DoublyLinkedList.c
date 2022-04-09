@@ -1,3 +1,5 @@
+/* Copyright 2022 Mihai Latea copyright */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -150,28 +152,20 @@ dll_reverse(doubly_linked_list_t *list)
 	list->head = prev;
 }
 
-void dll_sort(doubly_linked_list_t *list, int(*compare)(void *, void *))
-{
+void dll_sort(doubly_linked_list_t *list, int(*compare)(void *, void *)) {
 	int swapped;
-	dll_node_t *ptr1;
-	dll_node_t *lptr =NULL;
-
-	if (list->head == NULL)
-		return;
-	do {
+	for (unsigned int i = 0; i < list->size - 1; i++) {
 		swapped = 0;
-		ptr1 = list->head;
-
-		while (ptr1->next != lptr) {
-			if (compare((void *)ptr1->data, (void *)ptr1->next->data) > 0) {
-				void *tmp = ptr1->data;
-				ptr1->data = ptr1->next->data;
-				ptr1->next->data = tmp;
+		for (unsigned int j = 0; j < list->size - i - 1; j++) {
+			dll_node_t *first = dll_get_nth_node(list, j);
+			if (compare((void *)first->data, (void *)first->next->data) > 0) {
+				void *tmp = first->data;
+				first->data = first->next->data;
+				first->next->data = tmp;
 				swapped = 1;
 			}
-			ptr1 = ptr1->next;
 		}
-		lptr = ptr1;
+		if (swapped == 0)
+			break;
 	}
-	while (swapped);
 }

@@ -1,3 +1,5 @@
+/* Copyright 2022 Mihai Latea copyright */
+
 #ifndef ___DOUBLY_LINKED_LIST_H_
 #define ___DOUBLY_LINKED_LIST_H_
 

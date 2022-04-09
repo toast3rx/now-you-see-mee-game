@@ -1,3 +1,5 @@
+/* Copyright 2022 Mihai Latea copyright */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -125,13 +127,13 @@ int add_cards(playing_set *set, int deck_index, int cards_count)
 	for (int i = 0; i < cards_count; i++) {
 		playing_card *new_card = malloc(sizeof(*new_card));
 
-		char str[100];
-		fgets(str, 100, stdin);
+		char str[MAX_STRING_SIZE];
+		fgets(str, MAX_STRING_SIZE, stdin);
 		int n = sscanf(str, "%d %s", &new_card->value, new_card->symbol);
 
 		while (n != 2 || !is_card_valid(new_card->value, new_card->symbol)) {
 			invalid_card_exception();
-			fgets(str, 100, stdin);
+			fgets(str, MAX_STRING_SIZE, stdin);
 			n = sscanf(str, "%d %s", &new_card->value, new_card->symbol);
 		}
 
@@ -157,7 +159,8 @@ int get_deck_len(playing_set *set, int index)
 
 int merge_decks(playing_set *set, int index1, int index2)
 {
-	if (is_deck_out_of_bounds(set, index1) || is_deck_out_of_bounds(set, index2)) {
+	if (is_deck_out_of_bounds(set, index1) ||
+		is_deck_out_of_bounds(set, index2)) {
 		deck_index_out_of_bounds_exception();
 		return 0;
 	}
@@ -217,8 +220,10 @@ int shuffle_deck(playing_set *set, int index)
 
 	deck *shuffled_deck = (deck *)(dll_get_nth_node(set, index)->data);
 
-	dll_node_t *middle_node = dll_get_nth_node(shuffled_deck, shuffled_deck->size / 2);
-	dll_node_t *last_node = dll_get_nth_node(shuffled_deck, shuffled_deck->size - 1);
+	dll_node_t *middle_node = dll_get_nth_node(shuffled_deck,
+											   shuffled_deck->size / 2);
+	dll_node_t *last_node = dll_get_nth_node(shuffled_deck,
+											 shuffled_deck->size - 1);
 
 	last_node->next = shuffled_deck->head;
 	shuffled_deck->head->prev = last_node;
@@ -276,7 +281,7 @@ int reverse_deck(playing_set *set, int deck_index)
 }
 
 int symbol_to_value(char *symbol) {
-	if (strcmp(symbol, HEART_SYMBOl) == 0) 
+	if (strcmp(symbol, HEART_SYMBOl) == 0)
 		return 1;
 	if (strcmp(symbol, SPADE_SYMBOl) == 0)
 		return 2;

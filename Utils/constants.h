@@ -1,9 +1,13 @@
+/* Copyright 2022 Mihai Latea copyright */
+#ifndef _CONSTANTS_H_
+#define _CONSTANTS_H_
+
 #define HEART_SYMBOl "HEART"
 #define SPADE_SYMBOl "SPADE"
 #define DIAMOND_SYMBOl "DIAMOND"
 #define CLUB_SYMBOl "CLUB"
 
-#define MAX_WORD 100
+#define MAX_STRING_SIZE 256
 
 #define CARD_MAX_VALUE 14
 #define CARD_MIN_VALUE 1
@@ -22,3 +26,5 @@
 #define SPLIT_CMD "SPLIT_DECK"
 #define REVERSE_CMD "REVERSE_DECK"
 #define SORT_CMD "SORT_DECK"
+
+#endif

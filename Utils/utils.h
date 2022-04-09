@@ -1,5 +1,7 @@
-#ifndef _utils_h_
-#define _utils_h_
+/* Copyright 2022 Mihai Latea copyright */
+
+#ifndef _UTILS_H_
+#define _UTILS_H_
 
 /**
 *@brief Split a string in words delimited by space

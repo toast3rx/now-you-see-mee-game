@@ -1,5 +1,7 @@
-#ifndef _deck_H_
-#define _deck_H_
+/* Copyright 2022 Mihai Latea copyright */
+
+#ifndef _DECK_H_
+#define _DECK_H_
 #include "../DoublyLinkedListImpl/DoublyLinkedList.h"
 
 /**

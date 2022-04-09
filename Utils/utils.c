@@ -1,3 +1,5 @@
+/* Copyright 2022 Mihai Latea copyright */
+
 #include <stdio.h>
 #include "constants.h"
 #include <string.h>
@@ -22,7 +24,7 @@ void split_string(char *str, char **words_array)
 
 char **read_command(char *command, int *args)
 {
-	fgets(command, MAX_WORD, stdin);
+	fgets(command, MAX_STRING_SIZE, stdin);
 
 	// Count number of words and longest word for memory allocation
 	int count_words = 0;

@@ -1,7 +1,10 @@
+/* Copyright 2022 Mihai Latea copyright */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "../DeckUtils/deck.h"
 #include "../Exceptions/exceptions.h"
+#include "../Utils/constants.h"
 
 void add_deck_command(playing_set *set, int cards_number) {
 
@@ -16,16 +19,17 @@ void add_deck_command(playing_set *set, int cards_number) {
 
 		while (n != 2 || !is_card_valid(new_card->value, new_card->symbol) ) {
 			invalid_card_exception();
-			fgets(str, 100, stdin);
+			fgets(str, MAX_STRING_SIZE, stdin);
 			n = sscanf(str, "%d %s", &new_card->value, new_card->symbol);
 		}
 
 		dll_add_nth_node(deck, deck->size, (void *) new_card);
-		
+
 		free(new_card);
 	}
 		add_deck(set, deck);
-		printf("The deck was successfully created with %d cards.\n", deck->size);
+		printf("The deck was successfully created with %d cards.\n",
+				deck->size);
 	free(deck);
 }
 

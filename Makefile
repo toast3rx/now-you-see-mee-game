@@ -1,12 +1,14 @@
-build:
-	gcc -ggdb3 -Wall -Wextra  DeckUtils/deck.c DoublyLinkedListImpl/DoublyLinkedList.c IO_Utils/IO_commands.c Utils/utils.c Exceptions/exceptions.c now_you_see_me.c -o tema1
+CC=gcc
+CFLAGS=-std=c99 -ggdb3 -Wall -Wextra
 
-#pack:
-#	zip -r  311CA_LateaMihaiAlexandru_Tema3.zip \
-#		image_editor.c utils.c utils.h image_utils.c image_utils.h command_check.c \
-#		command_check.h commands.c commands.h constants.h structs.h exceptions.h exceptions.c \
-#	       	image_example Makefile README README.md
+build:
+	$(CC)  $(CFLAGS)  DeckUtils/deck.c DoublyLinkedListImpl/DoublyLinkedList.c IO_Utils/IO_commands.c Utils/utils.c Exceptions/exceptions.c now_you_see_me.c -o tema1
+
+pack:
+	zip -r 311CA_LateaMihaiAlexandru_Tema1.zip \
+		DeckUtils/ DoublyLinkedListImpl/ Exceptions/ IO_Utils/ Utils/ now_you_see_me.c \
+		README.md Makefile
 run:
-	./a.out
+	./tema1
 clean:
-	rm -f a.out
+	rm -f tema1

@@ -1,3 +1,5 @@
+/* Copyright 2022 Mihai Latea copyright */
+
 #ifndef _EXCEPTIONS_H_
 #define _EXCEPTIONS_H_
 #include "../DeckUtils/deck.h"

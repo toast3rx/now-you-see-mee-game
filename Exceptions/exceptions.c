@@ -1,3 +1,5 @@
+/* Copyright 2022 Mihai Latea copyright */
+
 #include "stdio.h"
 #include "../DeckUtils/deck.h"
 #include "../Utils/constants.h"

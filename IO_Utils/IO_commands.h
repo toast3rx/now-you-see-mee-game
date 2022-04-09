@@ -1,5 +1,7 @@
-#ifndef _IO_commands_h_
-#define _IO_commands_h_
+/* Copyright 2022 Mihai Latea copyright */
+
+#ifndef _IO_COMMANDS_h_
+#define _IO_COMMANDS_h_
 #include "../DoublyLinkedListImpl/DoublyLinkedList.h"
 
 /**
